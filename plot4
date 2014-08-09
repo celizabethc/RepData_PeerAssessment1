@@ -1,0 +1,89 @@
+d<-read.table("/Users/cynthiacozzetto/household_power_consumption 2.txt",header = TRUE, sep = ";")
+
+date<-d[,1]
+time<-d[,2]
+Global_active_power<-d[,3]
+Global_reactive_power<-d[,4]
+Voltage<-as.numeric(as.character(d[,5]))
+Global_intensity<-d[,6]
+Sub_metering_1<-d[,7]
+Sub_metering_2<-d[,8]
+Sub_metering_3<-d[,9]
+
+d2 <- d[ which(date=='2/2/2007'|date=='1/2/2007'), ]
+
+date<-(d2[,1])
+time<-d2[,2]
+Global_active_power<-as.numeric(as.character((d2[,3])))
+Global_reactive_power<-ts(d2[,4])
+Voltage<-as.numeric(as.character((d2[,5])))
+Global_intensity<-ts(d2[,6])
+Sub_metering_1<-as.numeric(as.character(d2[,7]))
+Sub_metering_2<-as.numeric(as.character(d2[,8]))
+Sub_metering_3<-as.numeric(as.character(d2[,9]))
+
+
+##set up 4 plots
+par(mfrow=c(2,2))
+
+##top left
+plot(Global_active_power2~time,xaxt='n',yaxt='n',
+     ylab="Global Active Power (kilowatts)",xlab="",lwd=.5)
+ylab<-c(0,2,4,6)
+xlab<-c("Thurs","Fri","Sat")
+axis(side = 1, at= c(1,length(time)/4,length(time)/2), labels=xlab)
+axis(side = 2, at= c(0,1000,2000,3000), labels=ylab)
+
+##top right
+
+plot(Voltage~time,xaxt='n',yaxt='n',
+     ylab="Voltage",xlab="datetime", lwd=.5)
+ylab<-c(234,238,242,246)
+xlab<-c("Thurs","Fri","Sat")
+axis(side = 1, at= c(1,length(time)/4,length(time)/2), labels=xlab)
+axis(side = 2, at= c(234,238,242,246), labels=ylab)
+
+## Bottom Left
+
+##plot 3
+# Create Line Chart
+
+plot(Sub_metering_1~time,xaxt='n',xlab="",
+     ylab="Energy sub metering",col="black",axes=FALSE,frame.plot=TRUE)
+
+Axis(side=1, labels=FALSE)
+Axis(side=2, labels=FALSE)
+
+##Add Submetering 2 in red
+lines(Sub_metering_2,col="red")
+
+##Add Submetering 3 in blue
+lines(Sub_metering_3,col="blue")
+xlab<-c("Thurs","Fri","Sat")
+
+##Set x-axis
+axis(side = 1, at= c(1,length(time)/4,length(time)/2), labels=xlab)
+
+##Add legend for colors for variables
+legend(650,40, c("Sub_metering_1","Sub_metering_2","Sub_metering_3"),
+       lty=c(1,1,1),lwd=c(2.5,2.5,2.5),
+       col=c("black","red", "blue"),
+       bty = "n",
+       cex=.8, pt.cex = 1)
+
+
+##Bottom Right
+
+plot(Global_reactive_power2~time,xaxt='n',yaxt='n',
+     ylab="Global_reactive_power",xlab="datetime",lwd=.5)
+
+ylab<-c("0.0","0.1","0.2","0.3","0.4","0.5")
+
+xlab<-c("Thurs","Fri","Sat")
+
+axis(side = 1, at= c(1,length(time)/4,length(time)/2), labels=xlab)
+
+axis(side = 2, at= c(0,40,80,120,160,200), labels=ylab)
+
+
+
