@@ -29,8 +29,13 @@ Sub_metering_3<-ts(d2[,9])
 
 
 ##plot 1
-hist(Global_active_power,col="red",xlab="Global Active Power (kilowatts)",ylab="Frequency",
+plot1<-hist(Global_active_power,col="red",xlab="Global Active Power (kilowatts)",ylab="Frequency",
      main="Global Active Power")
+
+##Write png     
+png(filename="plot1.png")
+plot(plot1)
+dev.off()
 
 
 
