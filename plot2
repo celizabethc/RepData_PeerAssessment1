@@ -31,7 +31,7 @@ Sub_metering_3<-as.numeric(as.character(d2[,9]))
 
 
 ##plot 2
-plot(Global_active_power2~time,xaxt='n',yaxt='n',
+plot2<- plot(Global_active_power2~time,xaxt='n',yaxt='n',
      ylab="Global Active Power (kilowatts)",lwd=.5)
 
 ylab<-c(0,2,4,6)
@@ -40,6 +40,11 @@ xlab<-c("Thurs","Fri","Sat")
 axis(side = 1, at= c(1,length(time)/4,length(time)/2), labels=xlab)
 axis(side = 2, at= c(0,1000,2000,3000), labels=ylab)
 
+##write plot2
+
+png(filename="plot2.png")
+plot(plot2)
+dev.off()
 
 
 
