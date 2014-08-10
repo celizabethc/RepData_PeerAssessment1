@@ -29,7 +29,7 @@ par(mfrow=c(2,2))
 
 ##top left
 
-plot(Global_active_power~time,xaxt='n',yaxt='n',
+plot4<-plot(Global_active_power~time,xaxt='n',yaxt='n',
      ylab="Global Active Power (kilowatts)",xlab="",lwd=.5)
 ylab<-c(0,2,4,6)
 xlab<-c("Thurs","Fri","Sat")
@@ -88,4 +88,8 @@ axis(side = 1, at= c(1,length(time)/4,length(time)/2), labels=xlab)
 axis(side = 2, at= c(0,40,80,120,160,200), labels=ylab)
 
 
+##plot4
 
+png(filename="plot4.png")
+plot(plot4)
+dev.off()
