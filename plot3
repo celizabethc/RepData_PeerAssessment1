@@ -31,7 +31,7 @@ Sub_metering_3<-as.numeric(as.character(d2[,9]))
 ##plot 3
 # Create Line Chart
 
-plot(Sub_metering_1~time,xaxt='n',
+plot3<-plot(Sub_metering_1~time,xaxt='n',
      ylab="Energy sub metering",xlab="",col="black")
 
 ##Add Submetering 2 in red
@@ -55,4 +55,6 @@ legend(970,40, c("Sub_metering_1","Sub_metering_2","Sub_metering_3"),
 
 
 
-
+png(filename="plot3.png")
+plot(plot3)
+dev.off()
