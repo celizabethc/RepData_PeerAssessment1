@@ -1,4 +1,4 @@
-d<-read.table("/Users/cynthiacozzetto/household_power_consumption 2.txt",header = TRUE, sep = ";")
+d<-read.table("/household_power_consumption 2.txt",header = TRUE, sep = ";")
 
 date<-d[,1]
 time<-d[,2]
@@ -24,9 +24,11 @@ Sub_metering_3<-as.numeric(as.character(d2[,9]))
 
 
 ##set up 4 plots
+
 par(mfrow=c(2,2))
 
 ##top left
+
 plot(Global_active_power~time,xaxt='n',yaxt='n',
      ylab="Global Active Power (kilowatts)",xlab="",lwd=.5)
 ylab<-c(0,2,4,6)
