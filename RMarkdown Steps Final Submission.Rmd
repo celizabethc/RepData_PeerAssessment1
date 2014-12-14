@@ -1,0 +1,125 @@
+Reproducible Research
+Activity Data Analysis (Assignment #1)
+========================================================
+
+This is an R Markdown document to analyze activity data.
+
+The variables included in this analysis are date, steps and time interval.
+
+```{r}
+##Read in csv file
+d<-read.csv("/activity.csv")
+steps<-d[,1]
+date<-d[,2]
+interval<-d[,3]
+
+##Identify NA steps
+missing<-is.na(steps)
+
+d2<-data.frame(steps,date,interval,missing)
+steps<-d2[,1]
+date<-d2[,2]
+interval<-d2[,3]
+missing<-d2[,4]
+
+##Subset for complete values
+subset<-d2[missing==FALSE,]
+
+steps<-subset[,1]
+date<-subset[,2]
+interval<-subset[,3]
+##date<-as.Date(summary[,1], "%m/%d/%y")
+```
+
+What is mean total number of steps taken per day?
+
+Barplot of Total Number of Steps 
+```{r fig.width=7, fig.height=6}
+
+library(plyr)
+
+summary<-ddply(subset,~date,summarize,sum=sum(steps))
+date<-as.Date(summary[,1], "%m/%d/%y")
+sum.steps<-summary[,2]
+barplot(sum.steps,xlab="Date",ylab="Sum of Steps")
+
+```
+
+Mean Number of Steps
+```{r}
+##library(plyr)
+
+mean.summary<-ddply(subset,~date,summarize,sum=mean(steps))
+print(mean.summary)
+```
+
+Median Number of Steps
+```{r}
+##library(plyr)
+med.summary<-ddply(subset,~date,summarize,med=median(steps))
+print(med.summary)
+```
+
+What is the average daily activity pattern?
+
+Timeseries plot of Mean
+
+```{r fig.width=7, fig.height=6}
+mean.summary<-ddply(subset,~date+interval,summarize,sum=mean(steps))
+m.interval<-ts(mean.summary[,2])
+m.steps<-mean.summary[,3]
+
+plot.ts(m.steps)
+```
+
+Imputing missing values
+
+```{r}
+install.packages("zoo")
+library(zoo)
+
+d<-read.csv("activity.csv")
+steps<-d[,1]
+date<-d[,2]
+interval<-d[,3]
+##steps2<-na.approx(steps) 
+steps[is.na(steps)]<-mean(steps)
+
+d3<-data.frame(steps,date,interval)
+
+
+summary<-ddply(d3,~date,summarize,sum=sum(steps))
+date<-as.Date(summary[,1], "%m/%d/%y")
+sum.steps<-summary[,2]
+barplot(sum.steps,xlab="Date",ylab="Sum of Steps Filled in")
+```
+
+
+Are there differences in activity patterns between weekdays and weekends?
+
+```{r}
+install.packages("timeDate")
+library(timeDate)
+
+weekday<-isWeekday(date1)
+wd<-data.frame(weekday,steps,interval,date1)
+mean.summary<-ddply(wd,~weekday,summarize,sum=mean(steps))
+
+plot(steps,date)
+
+install.packages("ggplot2")
+library(ggplot2)
+ggplot(wd, aes(steps)) + geom_bar() +facet_wrap(~ weekday)
+```
+
+There exists a significant difference between weekdays and weekends.
+
+
+##Plot weekday versus weekend, figure out median, resubmit
+
+
+
+
+
+
+
