@@ -78,7 +78,7 @@ Imputing missing values
 install.packages("zoo")
 library(zoo)
 
-d<-read.csv("/Users/cynthiacozzetto/activity.csv")
+d<-read.csv("activity.csv")
 steps<-d[,1]
 date<-d[,2]
 interval<-d[,3]
@@ -112,6 +112,7 @@ library(ggplot2)
 ggplot(wd, aes(steps)) + geom_bar() +facet_wrap(~ weekday)
 ```
 
+There exists a significant difference between weekdays and weekends.
 
 
 ##Plot weekday versus weekend, figure out median, resubmit
